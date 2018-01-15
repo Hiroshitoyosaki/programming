@@ -1,25 +1,25 @@
 
 <html>
 
-<!���o��>
-<h1>�D���ȉf��͂Ȃ�ł����H</h1>
+<!見出し>
+<h1>好きな映画はなんですか？</h1>
 
-<!�^�C�g��>
+<!タイトル>
 <head>
-	<title>�D���ȉf��͂Ȃ�ł����H</title>
+	<title>好きな映画はなんですか？</title>
 </head>
 
 
-<!php�ɖ��O�ƃR�����g���𑗂�>
+<!phpに名前とコメント情報を送る>
 <form action="mission_2-3.php" method="post" >
 
-���O <input type="text" name="name2-2" size="">
+名前 <input type="text" name="name2-2" size="">
 
 <br>
-�R�����g<input type="text" name="comment2-2" size="">
+コメント<input type="text" name="comment2-2" size="">
 
 <br>
-�p�X���[�h<input type="text" name="password2-2">
+パスワード<input type="text" name="password2-2">
 
 
 
@@ -32,77 +32,77 @@
 
 <?php
 
-//���e�ԍ������蓖�Ă�
-//�R�����g���ۑ�����Ă���͂��̃e�L�X�g�t�@�C���̓��e��z��Ɋi�[
+//投稿番号を割り当てる
+//コメントが保存されているはずのテキストファイルの内容を配列に格納
 $comment_array=file('mission_2-2.text');
 
 
-//�u���e�񐔂��J�E���g����t�@�C���v�����݂��邩�ǂ����ŏ�������
+//「投稿回数をカウントするファイル」が存在するかどうかで条件分岐
 
-//1��ڂ́A�t�@�C��������āA1������
-//2��ڈȍ~�ł���΁A���e�ԍ����X�V���Ă���
+//1回目は、ファイルを作って、1を入れる
+//2回目以降であれば、投稿番号を更新していく
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-//��������if(�t�@�C�������݂��邩�H)
+//ここからif(ファイルが存在するか？)
 if(file_exists('count.text')){
 
-//�J�E���g�p�t�@�C����p���āA�u���e���ꂽ�񐔂��X�V���Ă����v�����̃t�@�C�������
+//カウント用ファイルを用いて、「投稿された回数を更新していく」だけのファイルを作る
 
-//�J�E���g�p�t�@�C�����J��
+//カウント用ファイルを開く
 $fp2=fopen('count.text','r');
 
-//������Ƃ��āA��s�ڂ�ǂݍ���
+//文字列として、一行目を読み込む
 $num_text=fgets($fp2);
 
-//�t�@�C�������
+//ファイルを閉じる
 fclose($fp2);
 
-//�������int(�����^)�ɕϊ�
+//文字列をint(整数型)に変換
 $number=(int)$num_text;
-//1���₷
+//1増やす
 $number+=1;
 
 
-//�z��p�t�@�C�����k�ɂ��ĊJ��
+//配列用ファイルを殻にして開く
 $fp2=fopen('count.text','w');
-//������������
+//数を書き込む
 fwrite($fp2,$number);
 
-//�t�@�C�������
+//ファイルを閉じる
 fclose($fp2);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-//�����܂�if(�t�@�C�������݂��邩�H)
+//ここまでif(ファイルが存在するか？)
 }
 
 //###################################################################################################
-//��������else(�t�@�C�������݂��Ȃ��Ƃ�)
+//ここからelse(ファイルが存在しないとき)
 else{
 
-//�܂���fopen�̂����[�h�i�������݃��[�h�j�Ńt�@�C�����J��
+//まずはfopenのｗモード（書き込みモード）でファイルを開く
 $fp=fopen('count.text','w');
 
 
-//fopen�ŊJ�����e�L�X�g�t�@�C���Ɂutest�v�Ə�������
+//fopenで開いたテキストファイルに「test」と書き込む
 
 $number=1;
 
 fwrite($fp,$number);
 
-//fopen�ŊJ�����e�L�X�g�t�@�C�������
+//fopenで開いたテキストファイルを閉じる
 fclose($fp);
 
 //###################################################################################################
-///�����܂�else(�t�@�C�������݂��Ȃ��Ƃ�)
+///ここまでelse(ファイルが存在しないとき)
 }
 
 
 
-//�J�E���g�p�t�@�C���̐����𓊍e�ԍ��Ƃ��Đ錾
+//カウント用ファイルの数字を投稿番号として宣言
 
 $comment_number=(int)$number;
 
-//html�̃t�H�[���œ��͂��ꂽ�����擾����
+//htmlのフォームで入力された情報を取得する
 
 
 $form_name_2_2=$_POST['name2-2'];
@@ -111,64 +111,64 @@ $form_password_2_2=$_POST['password2-2'];
 //echo $form_password_2_2;
 
 
-//���Ԃ��擾����
+//時間を取得する
 $time=date("20y/m/d/H:i:s");
 
-//<>��ϐ��ɂ��Ă��܂�
+//<>を変数にしてしまう
 $p="<>";
 
 
 
 
-//���̓t�H�[���̏�����̕ϐ��ɂ܂Ƃ߂�
-//�ϐ����܂Ƃ߂�ȑO�ɁA//$form_name_2_2,$form_comment_2_2�����������擾�ł��Ă��Ȃ����Ƃ�����
+//入力フォームの情報を一つの変数にまとめる
+//変数をまとめる以前に、//$form_name_2_2,$form_comment_2_2がそもそも取得できていないことが判明
 $form_contents=$comment_number.$p.$form_name_2_2.$p.$form_comment_2_2.$p.$form_password_2_2.$p.$time;
 //echo $form_contents;
 
 
 
-//�e�L�X�g�t�@�C����$formcontents����������
-//�ۑ��������e�L�X�g�t�@�C���ɖ��O������
+//テキストファイルに$formcontentsを書き込む
+//保存したいテキストファイルに名前をつける
 $filename='mission_2-2.text';
 
-//fopen��a���[�h�Łi�ǋL���[�h�j�Ńt�@�C�����J��
+//fopenのaモードで（追記モード）でファイルを開く
 $fp=fopen($filename,'a+');
 
 
-//fopen�ŊJ�����e�L�X�g�t�@�C���ɁA$formcontents����������
+//fopenで開いたテキストファイルに、$formcontentsを書き込む
 fwrite($fp,$form_contents);
 
 
-//���s����B
+//改行する。
 fwrite($fp,"\n");
 
 
-//fopen�ŊJ�����e�L�X�g�t�@�C�������
+//fopenで開いたテキストファイルを閉じる
 fclose($fp);
 
 
 
 
 
-//�ȉ����[�v����
+//以下ループ処理
 
 
 
-//��܂��ȗ���Ƃ��ẮA���e�L�X�g�t�@�C���̈�s��s(�z��̗v�f)�ɑ΂��āAexplode�������čו��������z��̒��g��\�����Ƃ�����A�̗����for�ŉ�����J��Ԃ��B
-//�e�L�X�g�t�@�C���̊e�s(���ɔz��̗v�f����)���A����ɍו�������āA4�̗v�f����Ȃ�z��ɂȂ�(���e�ԍ��A���O�A�R�����g�A����)
+//大まかな流れとしては、＜テキストファイルの一行一行(配列の要素)に対して、explodeをかけて細分化した配列の中身を表示＞という一連の流れをforで何回も繰り返す。
+//テキストファイルの各行(既に配列の要素だが)が、さらに細分化されて、5つの要素からなる配列になる(投稿番号、名前、コメント、パスワード、投稿時間)
 
 
-//���[�v��������񐔂́A�e�L�X�g�t�@�C���̍s���̉񐔁B
+//ループ処理する回数は、テキストファイルの行数の回数。
 for($i=0; $i<count($comment_array); ++$i){
-	//$comment_array�̔z��̗v�f(=�e�s)��explode��<>���Ƃɕ����A������i���C���[�������Ĕz��Ƃ��Ċi�[
+	//$comment_arrayの配列の要素(=各行)をexplodeで<>ごとに分け、もう一段レイヤーを下げて配列として格納
 	$post=explode("$p",$comment_array[$i]);
-	//explode�ł�����i�ו������ꂽ�z����Aecho�ŕ\��
-	echo "���e�ԍ�: ".$post[0],"<br>";
-	echo "���O: ".$post[1],"<br>";
-	echo "�R�����g: ".$post[2],"<br>";
-	//�z��̗v�f3�ځi4�ځj�́A�p�X���[�h�Ȃ̂ŕ\�����Ȃ��B
+	//explodeでもう一段細分化された配列を、echoで表示
+	echo "投稿番号: ".$post[0],"<br>";
+	echo "名前: ".$post[1],"<br>";
+	echo "コメント: ".$post[2],"<br>";
+	//配列の要素3つ目（4つ目）は、パスワードなので表示しない。
 	//echo $post[3],"<br>";
-	echo "���e����: ".$post[4],"<br>","<br>";
+	echo "投稿時間: ".$post[4],"<br>","<br>";
 }
 
 
